@@ -108,7 +108,7 @@ namespace BPMSApi.Repositories
         {
             // The below would be used to access the API and make PUT requests to it.
             // var response = await Client.PutAsync($"{BaseUrl}/{url}", GetByteArrayContent(content)).Result.Content.ReadAsStringAsync();
-            var response = "";
+            var response = GetJson();
             return JsonConvert.DeserializeObject<T>(response);
         }
 

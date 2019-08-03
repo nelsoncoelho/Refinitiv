@@ -23,6 +23,7 @@ namespace BPMSApiUnitTests
                 Approver = "Nelson Coelho",
                 RejectionReason = "Expired."
             });
+            Assert.IsTrue(test.Data.Count > 0);
         }
     }
 }
