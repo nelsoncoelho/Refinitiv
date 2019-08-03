@@ -1,3 +1,4 @@
+using BPMSApi.Model.BPMSTask;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
@@ -16,6 +17,12 @@ namespace BPMSApiUnitTests
         [TestMethod]
         public async Task PutBPMSTasksTest()
         {
+            var test = await Instance.BPMSTaskFunctions.UpdateBPMSTask(new UpdateBPMSTaskRequest
+            {
+                Approved = false,
+                Approver = "Nelson Coelho",
+                RejectionReason = "Expired."
+            });
         }
     }
 }

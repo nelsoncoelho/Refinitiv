@@ -24,5 +24,8 @@
       <td>{{ task.id }}</td>
       <td>{{ task.name }}</td>
     </tr>
+    <tr *ngIf="tasks.length == 0">
+      <td><h3>No results found!</h3></td>
+    </tr>
   </tbody>
 </table>

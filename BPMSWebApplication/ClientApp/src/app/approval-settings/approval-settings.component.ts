@@ -23,7 +23,7 @@ export class ApprovalSettingsComponent {
     });
   }
 
-  display() {
+  MakeCall() {
     if (this.request.approver == null || (this.request.approved == false && this.request.rejectionReason == null)) {
       window.alert("Please fill all the mandatory fields.");
     }

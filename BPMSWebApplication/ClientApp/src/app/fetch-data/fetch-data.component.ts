@@ -15,13 +15,6 @@ export class FetchDataComponent {
   }
 }
 
-interface WeatherForecast {
-  dateFormatted: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
-
 interface BPMSData {
   assignee: string;
   createTime: Date;

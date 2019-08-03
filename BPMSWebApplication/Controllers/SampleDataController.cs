@@ -33,7 +33,8 @@ namespace BPMSWebApplication.Controllers
         [HttpGet("[action]")]
         public List<BPMSTaskData> WeatherForecasts()
         {
-            return BPMSApiInstance.BPMSTaskFunctions.GetBPMSTasks().Result.Data;
+            var results = BPMSApiInstance.BPMSTaskFunctions.GetBPMSTasks().Result?.Data;
+            return results == null ? new List<BPMSTaskData>() : results;
         }
 
         public class WeatherForecast
