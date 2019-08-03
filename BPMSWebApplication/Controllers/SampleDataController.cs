@@ -2,28 +2,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BPMSApi.Model.BPMSTask;
+using BPMSWebApplication.Configs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BPMSWebApplication.Controllers
 {
     [Route("api/[controller]")]
-    public class SampleDataController : Controller
+    public class SampleDataController : BaseController
     {
+        public SampleDataController(IBPMSSettings settings) : base(settings)
+        {
+        }
+
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
+        [HttpPut("[action]")]
+        public GetBPMSTaskResponse UpdateBPMSTask([FromBody] UpdateBPMSTaskRequest request)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
+            //var id = Request.Form["id"];
+            //var request = JsonConvert.DeserializeObject<UpdateBPMSTaskRequest>(Request.Form["request"]);
+            return BPMSApiInstance.BPMSTaskFunctions.UpdateBPMSTask(request).Result;
+        }
+
+        [HttpGet("[action]")]
+        public List<BPMSTaskData> WeatherForecasts()
+        {
+            return BPMSApiInstance.BPMSTaskFunctions.GetBPMSTasks().Result.Data;
         }
 
         public class WeatherForecast

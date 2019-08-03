@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './fetch-data.component.html'
 })
 export class FetchDataComponent {
-  public forecasts: WeatherForecast[];
+  public tasks: BPMSData[];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<WeatherForecast[]>(baseUrl + 'api/SampleData/WeatherForecasts').subscribe(result => {
-      this.forecasts = result;
+    http.get<BPMSData[]>(baseUrl + 'api/SampleData/WeatherForecasts').subscribe(result => {
+      this.tasks = result;
     }, error => console.error(error));
   }
 }
@@ -20,4 +20,13 @@ interface WeatherForecast {
   temperatureC: number;
   temperatureF: number;
   summary: string;
+}
+
+interface BPMSData {
+  assignee: string;
+  createTime: Date;
+  description: string;
+  dueDate: Date;
+  id: number;
+  name: string;
 }

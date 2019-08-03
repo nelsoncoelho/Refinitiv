@@ -2,8 +2,10 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,8 +30,25 @@ namespace BPMSApi.Repositories
             // To be used if a custom API Key is used.
             // Client.DefaultRequestHeaders.Add("Custom-Api-Key", instance.Config.ApiKey);
 
-            // To be used
-            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Instance.Config.Token.AccessToken}");
+            // To be used if a bearer token is required for the call.
+            // Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Instance.Config.Token.AccessToken}");
+
+            // Function that generates the file for the tests.
+            WriteBaseJson();
+        }
+
+        // In order to avoid invalid paths for the file, this function should generate one.
+        private void WriteBaseJson()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "BPMSApi.Model.ApiData.Tasks.json";
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\Tasks.json", result);
+            }
         }
 
         // Gets the token.
@@ -71,18 +90,43 @@ namespace BPMSApi.Repositories
         // Gets the token for the calls.
         protected async Task<T> Get<T>(String url)
         {
-            var response = await Client.GetAsync($"{BaseUrl}/{url}").Result.Content.ReadAsStringAsync();
+            // The below would be used to access the API and Get the data.
+            // var response = await Client.GetAsync($"{BaseUrl}/{url}").Result.Content.ReadAsStringAsync();
+
+            var response = GetJson();
             return JsonConvert.DeserializeObject<T>(response);
         }
 
         protected async Task<T> Post<T>(String url, Object content)
         {
+            // The below would be used to access the API and make POST requests to it.
+            var response = await Client.PostAsync($"{BaseUrl}/{url}", GetByteArrayContent(content)).Result.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(response);
+        }
+
+        protected async Task<T> Put<T>(String url, Object content)
+        {
+            // The below would be used to access the API and make PUT requests to it.
+            // var response = await Client.PutAsync($"{BaseUrl}/{url}", GetByteArrayContent(content)).Result.Content.ReadAsStringAsync();
+            var response = "";
+            return JsonConvert.DeserializeObject<T>(response);
+        }
+
+        private String GetJson()
+        {
+            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"\Tasks.json"))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        private ByteArrayContent GetByteArrayContent(Object content)
+        {
             var myContent = JsonConvert.SerializeObject(content);
             var buffer = Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var response = await Client.PostAsync($"{BaseUrl}/{url}", byteContent).Result.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(response);
+            return byteContent;
         }
     }
 }

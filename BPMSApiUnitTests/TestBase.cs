@@ -36,7 +36,8 @@ namespace BPMSApiUnitTests
 
         protected TestBase()
         {
-            var credentials = GetBPMSSecrets().Result;
+            // Credentials would be gathered using this function.
+            // var credentials = GetBPMSSecrets().Result;
 
             Instance = new BPMSApiInstance(new BPMSConfig
             {

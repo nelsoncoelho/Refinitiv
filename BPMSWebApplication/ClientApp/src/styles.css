@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+.row {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+ .clickable:hover {
+    background-color:cornflowerblue;
+  }

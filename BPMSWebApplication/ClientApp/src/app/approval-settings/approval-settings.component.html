@@ -1,0 +1,32 @@
+<!--<input [(ngModel)]="approval" type="email" class="form-control form-control-lg input-lg" name="user-name" placeholder="Email" />-->
+<div class="page">
+  <div class="header">
+    <h1>Information for the record {{id}}</h1>
+  </div>
+  <div class="content">
+    <div class="row">
+      <p><i style="color:red;">*</i> Approver's name:</p>
+      <input [(ngModel)]="request.approver" type="text" />
+    </div>
+
+    <div class="row">
+      <p>Please select your approval.</p>
+      <select [(ngModel)]="request.approved">
+        <option value="true" selected>Approve</option>
+        <option value="false">Reject</option>
+      </select>
+    </div>
+
+    <div class="row"  *ngIf="request.approved == 'false'">
+      <p><i style="color:red;">*</i> Please explain the reason for the rejection:</p>
+      <textarea [(ngModel)]="request.rejectionReason" rows="4" cols="50"></textarea>
+    </div>
+
+    <div class="row">
+      <button (click)="display()">Save</button>
+      <button routerLink="/fetch-data">Cancel</button>
+    </div>
+  </div>
+</div>
+
+

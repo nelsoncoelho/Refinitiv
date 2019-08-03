@@ -1,3 +1,4 @@
+using BPMSWebApplication.Configs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,11 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace BPMSWebApplication
 {
     public class Startup
     {
+        private IBPMSSettings Settings;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -20,6 +24,20 @@ namespace BPMSWebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Loads the settings for the application
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            switch (environment.ToLower())
+            {
+                case "production":
+                    services.AddTransient<IBPMSSettings, ProductionConfig>();
+                    Settings = new ProductionConfig();
+                    break;
+                default:
+                    services.AddTransient<IBPMSSettings, DevelopmentConfig>();
+                    Settings = new DevelopmentConfig();
+                    break;
+            }
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory

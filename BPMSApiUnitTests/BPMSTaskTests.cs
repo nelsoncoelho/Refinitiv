@@ -1,17 +1,20 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
 namespace BPMSApiUnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTest1 : TestBase
     {
         [TestMethod]
-        public void GetBPMSTasksTest()
+        public async Task GetBPMSTasksTest()
         {
+            var test = await Instance.BPMSTaskFunctions.GetBPMSTasks();
+            Assert.IsTrue(test.Data.Count > 0);
         }
 
         [TestMethod]
-        public void PutBPMSTasksTest()
+        public async Task PutBPMSTasksTest()
         {
         }
     }

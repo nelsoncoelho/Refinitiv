@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BPMSApi.Repositories;
+using System;
 
 namespace BPMSApi
 {
@@ -9,6 +10,14 @@ namespace BPMSApi
         public BPMSApiInstance(BPMSConfig config)
         {
             config = Config;
+        }
+
+        public BPMSTaskFunctions BPMSTaskFunctions
+        {
+            get
+            {
+                return new BPMSTaskFunctions(this);
+            }
         }
     }
 }
