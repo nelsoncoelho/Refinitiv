@@ -17,39 +17,18 @@ namespace BPMSWebApplication.Controllers
         {
         }
 
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         [HttpPut("[action]")]
-        public GetBPMSTaskResponse UpdateBPMSTask([FromBody] UpdateBPMSTaskRequest request)
+        public List<BPMSTaskData> UpdateBPMSTask([FromBody] UpdateBPMSTaskRequest request)
         {
-            //var id = Request.Form["id"];
-            //var request = JsonConvert.DeserializeObject<UpdateBPMSTaskRequest>(Request.Form["request"]);
-            return BPMSApiInstance.BPMSTaskFunctions.UpdateBPMSTask(request).Result;
+            var results = BPMSApiInstance.BPMSTaskFunctions.UpdateBPMSTask(request).Result?.Data;
+            return results ?? new List<BPMSTaskData>(); ;
         }
 
         [HttpGet("[action]")]
-        public List<BPMSTaskData> WeatherForecasts()
+        public List<BPMSTaskData> GetBPMSTasks()
         {
             var results = BPMSApiInstance.BPMSTaskFunctions.GetBPMSTasks().Result?.Data;
-            return results == null ? new List<BPMSTaskData>() : results;
-        }
-
-        public class WeatherForecast
-        {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
-
-            public int TemperatureF
-            {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
-            }
+            return results ?? new List<BPMSTaskData>();
         }
     }
 }

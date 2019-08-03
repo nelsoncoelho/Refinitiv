@@ -9,7 +9,7 @@ export class FetchDataComponent {
   public tasks: BPMSData[];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<BPMSData[]>(baseUrl + 'api/SampleData/WeatherForecasts').subscribe(result => {
+    http.get<BPMSData[]>(baseUrl + 'api/SampleData/GetBPMSTasks').subscribe(result => {
       this.tasks = result;
     }, error => console.error(error));
   }

@@ -16,7 +16,6 @@ import { ApprovalSettingsComponent } from './approval-settings/approval-settings
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
     FetchDataComponent,
     ApprovalSettingsComponent
   ],
