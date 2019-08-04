@@ -32,23 +32,10 @@ namespace BPMSApiUnitTests
             request.Id = 8;
             test = await Instance.BPMSTaskFunctions.UpdateBPMSTask(request);
             Assert.IsTrue(test.Count > 0);
-        }
 
-        [TestMethod]
-        public async Task AuthenticationTest()
-        {
-            var user = new User
-            {
-                Username = "test",
-                Password = "test",
-                Name = "This is a test"
-            };
+            var test2 = await Instance.BPMSTaskFunctions.GetBPMSApprovals();
+            Assert.IsTrue(test2.Count > 0);
 
-            var registration = await Instance.AuthenticationFunctions.Register(user);
-            Assert.IsTrue(registration);
-            var login = await Instance.AuthenticationFunctions.Login(user);
-            Assert.IsNotNull(login);
-            Assert.IsTrue(login == user.Name);
         }
     }
 }

@@ -19,7 +19,12 @@
             </li>
             <li [routerLinkActive]='["link-active"]'>
               <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-th-list'></span> Fetch data
+                <span class='glyphicon glyphicon-th-list'></span> BPMS Tasks
+              </a>
+            </li>
+            <li [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/fetch-data-approvals"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-th-list'></span> BPMS Approvals
               </a>
             </li>
             <li>

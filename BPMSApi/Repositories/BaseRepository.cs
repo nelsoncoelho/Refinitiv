@@ -102,7 +102,7 @@ namespace BPMSApi.Repositories
             // The below would be used to access the API and Get the data.
             // var response = await Client.GetAsync($"{BaseUrl}/{url}").Result.Content.ReadAsStringAsync();
 
-            var response = url == "tasks" ? GetJson("Tasks") : GetJson("Users");
+            var response = GetJson(url);
             return JsonConvert.DeserializeObject<T>(response);
         }
 

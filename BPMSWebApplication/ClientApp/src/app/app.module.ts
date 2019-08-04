@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ApprovalSettingsComponent } from './approval-settings/approval-settings.component';
 import { LoginComponent } from './login/login.component';
+import { FetchDataApprovalsComponent } from './fetch-data-approvals/fetch-data-approvalscomponent';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { LoginComponent } from './login/login.component';
     HomeComponent,
     LoginComponent,
     FetchDataComponent,
-    ApprovalSettingsComponent
+    ApprovalSettingsComponent,
+    FetchDataApprovalsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,6 +30,7 @@ import { LoginComponent } from './login/login.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'fetch-data-approvals', component: FetchDataApprovalsComponent },
       { path: 'approval-settings/:id', component: ApprovalSettingsComponent }
     ])
   ],

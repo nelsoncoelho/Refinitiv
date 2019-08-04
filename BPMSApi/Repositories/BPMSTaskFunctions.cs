@@ -17,18 +17,22 @@ namespace BPMSApi.Repositories
 
         public async Task<GetBPMSTaskResponse> GetBPMSTasks()
         {
-            var result = await Get<GetBPMSTaskResponse>("tasks");
-            return result;
+            return await Get<GetBPMSTaskResponse>("Tasks");
+        }
+
+        public async Task<List<UpdateBPMSTaskRequest>> GetBPMSApprovals()
+        {
+            return await Get<List<UpdateBPMSTaskRequest>>("Approvals");
         }
 
         public async Task<List<UpdateBPMSTaskRequest>> UpdateBPMSTask(UpdateBPMSTaskRequest request)
         {
             // Below would be used with an actuall API.
             // var result = await Put<GetBPMSTaskResponse>($"tasks/{request.Id.ToString()}", request);
-
+            var tasks = await GetBPMSTasks();
             var result = await Put<List<UpdateBPMSTaskRequest>>("Approvals", request);
             result.Add(request);
-            if(result.Any(c => c.Id == request.Id))
+            if(tasks.Data.Any(c => c.Id == request.Id))
             {
                 File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"\\Approvals.json", JsonConvert.SerializeObject(result));
             }

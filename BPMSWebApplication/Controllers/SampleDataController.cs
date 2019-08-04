@@ -32,6 +32,13 @@ namespace BPMSWebApplication.Controllers
             return results ?? new List<BPMSTaskData>();
         }
 
+        [HttpGet("[action]")]
+        public List<UpdateBPMSTaskRequest> GetBPMSApprovals()
+        {
+            var results = BPMSApiInstance.BPMSTaskFunctions.GetBPMSApprovals().Result;
+            return results ?? new List<UpdateBPMSTaskRequest>();
+        }
+
         [HttpPost("[action]")]
         public Boolean Register([FromBody] User request)
         {

@@ -43,6 +43,7 @@ namespace BPMSApiUnitTests
                 // ApiKey = credentials.ApiKey,
                 // Credentials = credentials.Credentials
             });
+            Instance.BPMSTaskFunctions.WriteBaseJson();
         }
 
     }

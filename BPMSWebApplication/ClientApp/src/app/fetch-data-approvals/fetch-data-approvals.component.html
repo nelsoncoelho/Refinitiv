@@ -1,0 +1,29 @@
+<h1>BPMS Approvals</h1>
+
+<p>Click the row to set its approval settings.</p>
+
+<p *ngIf="!tasks"><em>Loading...</em></p>
+
+<table class='table' *ngIf="tasks">
+  <thead>
+    <tr>
+      <th>Approver</th>
+      <th>Approval Time</th>
+      <th>Rejection Reason</th>
+      <th>Approved</th>
+      <th>ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasks">
+      <td>{{ task.approver }}</td>
+      <td>{{ task.approvalTime | date: "medium"}}</td>
+      <td>{{ task.rejectionReason }}</td>
+      <td>{{ task.approved }}</td>
+      <td>{{ task.id }}</td>
+    </tr>
+    <tr *ngIf="tasks.length == 0">
+      <td><h3>No results found!</h3></td>
+    </tr>
+  </tbody>
+</table>
