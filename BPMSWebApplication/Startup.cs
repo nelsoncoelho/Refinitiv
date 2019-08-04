@@ -1,3 +1,4 @@
+using BPMSApi;
 using BPMSWebApplication.Configs;
 using BPMSWebApplication.Model.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +27,8 @@ namespace BPMSWebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var instance = new BPMSApiInstance(new BPMSConfig());
+            instance.AuthenticationFunctions.WriteBaseJson();
             //services.AddDbContext<AuthenticationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Loads the settings for the application

@@ -43,7 +43,7 @@ namespace BPMSApi.Repositories
         }
 
         // In order to avoid invalid paths for the file, this function should generate one.
-        private void WriteBaseJson()
+        public void WriteBaseJson()
         {
             FilesToBeCopied.ForEach(f =>
             {
