@@ -1,6 +1,7 @@
 ﻿using BPMSApi.Model.BPMSTask;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,16 @@ namespace BPMSApi.Repositories
         public async Task<GetBPMSTaskResponse> UpdateBPMSTask(UpdateBPMSTaskRequest request)
         {
             var result = await Put<GetBPMSTaskResponse>($"tasks/{request.Id.ToString()}", request);
+            var matchingRow = result.Data.Where(c => c.Id == request.Id).FirstOrDefault();
+            if(matchingRow != null)
+            {
+                result.Data = new List<BPMSTaskData> { matchingRow };
+
+            }
+            else
+            {
+                result.Data = new List<BPMSTaskData>();
+            }
             return result;
         }
     }

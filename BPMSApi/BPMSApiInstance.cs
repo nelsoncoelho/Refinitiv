@@ -19,5 +19,13 @@ namespace BPMSApi
                 return new BPMSTaskFunctions(this);
             }
         }
+
+        public AuthenticationFunctions AuthenticationFunctions
+        {
+            get
+            {
+                return new AuthenticationFunctions(this);
+            }
+        }
     }
 }

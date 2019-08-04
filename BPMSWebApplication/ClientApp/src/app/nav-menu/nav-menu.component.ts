@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
+  @Output() userEvent = new EventEmitter<any>();
 
   collapse() {
     this.isExpanded = false;
@@ -14,5 +15,19 @@ export class NavMenuComponent {
 
   toggle() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  sendUser() {
+    this.userEvent.emit(null);
+  }
+
+  logout() {
+    console.log("here");
+    this.sendUser();
+    localStorage.removeItem("User");
+  }
+
+  getUser(): string {
+    return localStorage.getItem("User");
   }
 }

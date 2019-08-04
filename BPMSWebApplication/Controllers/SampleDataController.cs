@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BPMSApi.Model.Authentication;
 using BPMSApi.Model.BPMSTask;
 using BPMSWebApplication.Configs;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,19 @@ namespace BPMSWebApplication.Controllers
         {
             var results = BPMSApiInstance.BPMSTaskFunctions.GetBPMSTasks().Result?.Data;
             return results ?? new List<BPMSTaskData>();
+        }
+
+        [HttpPost("[action]")]
+        public Boolean Register([FromBody] User request)
+        {
+            return BPMSApiInstance.AuthenticationFunctions.Register(request).Result;
+        }
+
+        [HttpPost("[action]")]
+        public String Login([FromBody] User request)
+        {
+            var response = BPMSApiInstance.AuthenticationFunctions.Login(request).Result;
+            return JsonConvert.SerializeObject(response);
         }
     }
 }

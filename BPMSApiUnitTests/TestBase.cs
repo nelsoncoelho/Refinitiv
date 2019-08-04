@@ -31,9 +31,7 @@ namespace BPMSApiUnitTests
 
         #endregion
 
-
-
-
+        
         protected TestBase()
         {
             // Credentials would be gathered using this function.

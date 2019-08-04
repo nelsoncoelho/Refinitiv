@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ApprovalSettingsComponent } from './approval-settings/approval-settings.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ApprovalSettingsComponent } from './approval-settings/approval-settings
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+    LoginComponent,
     FetchDataComponent,
     ApprovalSettingsComponent
   ],

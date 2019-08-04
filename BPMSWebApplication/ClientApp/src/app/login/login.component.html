@@ -1,0 +1,22 @@
+<div class="content">
+  <div class="row" style="margin-left:100px;">
+    <div>
+      <h1>BPMS Login Form</h1>
+    </div>
+
+    <div style="margin-top:50px;">
+      <h3>Please log in to proceed.</h3>
+      <p>Username: <input type="text" [(ngModel)]="loginForm.username" /></p>
+      <p>Password:  <input type="password" [(ngModel)]="loginForm.password" /></p>
+      <p><button (click)="login()">Login</button></p>
+    </div>
+
+    <div style="margin-top:50px;">
+      <h3>Or register here:</h3>
+      <p>Username: <input type="text" [(ngModel)]="registerForm.username" /></p>
+      <p>Password:  <input type="password" [(ngModel)]="registerForm.password" /></p>
+      <p>Name:  <input type="text" [(ngModel)]="registerForm.name" /></p>
+      <p><button (click)="register()">Register</button></p>
+    </div>
+  </div>
+</div>

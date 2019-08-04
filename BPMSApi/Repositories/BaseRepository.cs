@@ -16,6 +16,11 @@ namespace BPMSApi.Repositories
         public BPMSApiInstance Instance { get; set; }
         public String BaseUrl { get; } = "“http://bpms.com";
         public HttpClient Client { get; set; }
+        public List<String> FilesToBeCopied { get; set; } = new List<String>
+        {
+            "Tasks",
+            "Users"
+        };
 
         protected BaseRepository(BPMSApiInstance instance)
         {
@@ -34,21 +39,24 @@ namespace BPMSApi.Repositories
             // Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Instance.Config.Token.AccessToken}");
 
             // Function that generates the file for the tests.
-            WriteBaseJson();
+            // WriteBaseJson();
         }
 
         // In order to avoid invalid paths for the file, this function should generate one.
         private void WriteBaseJson()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "BPMSApi.Model.ApiData.Tasks.json";
-
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
+            FilesToBeCopied.ForEach(f =>
             {
-                string result = reader.ReadToEnd();
-                File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + @"\Tasks.json", result);
-            }
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourceName = $"BPMSApi.Model.ApiData.{f}.json";
+
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string result = reader.ReadToEnd();
+                    File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"\\{f}.json", result);
+                }
+            });
         }
 
         // Gets the token.
@@ -93,14 +101,16 @@ namespace BPMSApi.Repositories
             // The below would be used to access the API and Get the data.
             // var response = await Client.GetAsync($"{BaseUrl}/{url}").Result.Content.ReadAsStringAsync();
 
-            var response = GetJson();
+            var response = url == "tasks" ? GetJson("Tasks") : GetJson("Users");
             return JsonConvert.DeserializeObject<T>(response);
         }
 
         protected async Task<T> Post<T>(String url, Object content)
         {
             // The below would be used to access the API and make POST requests to it.
-            var response = await Client.PostAsync($"{BaseUrl}/{url}", GetByteArrayContent(content)).Result.Content.ReadAsStringAsync();
+            // var response = await Client.PostAsync($"{BaseUrl}/{url}", GetByteArrayContent(content)).Result.Content.ReadAsStringAsync();
+            var response = JsonConvert.SerializeObject(content);
+            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"\\{url}.json", response);
             return JsonConvert.DeserializeObject<T>(response);
         }
 
@@ -108,13 +118,13 @@ namespace BPMSApi.Repositories
         {
             // The below would be used to access the API and make PUT requests to it.
             // var response = await Client.PutAsync($"{BaseUrl}/{url}", GetByteArrayContent(content)).Result.Content.ReadAsStringAsync();
-            var response = GetJson();
+            var response = GetJson("Tasks");
             return JsonConvert.DeserializeObject<T>(response);
         }
 
-        private String GetJson()
+        private String GetJson(String file)
         {
-            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"\Tasks.json"))
+            using (StreamReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + $"\\{file}.json"))
             {
                 return reader.ReadToEnd();
             }
