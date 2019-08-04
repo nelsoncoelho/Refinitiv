@@ -27,15 +27,15 @@ namespace BPMSApiUnitTests
                 RejectionReason = "Expired."
             };
             var test = await Instance.BPMSTaskFunctions.UpdateBPMSTask(request);
-            Assert.IsTrue(test.Data.Count == 0);
+            Assert.IsTrue(test.Count == 0);
 
             request.Id = 8;
             test = await Instance.BPMSTaskFunctions.UpdateBPMSTask(request);
-            Assert.IsTrue(test.Data.Count > 0);
+            Assert.IsTrue(test.Count > 0);
         }
 
         [TestMethod]
-        public async Task RegisterTest()
+        public async Task AuthenticationTest()
         {
             var user = new User
             {
@@ -44,7 +44,11 @@ namespace BPMSApiUnitTests
                 Name = "This is a test"
             };
 
-            Instance.AuthenticationFunctions.Register(user);
+            var registration = await Instance.AuthenticationFunctions.Register(user);
+            Assert.IsTrue(registration);
+            var login = await Instance.AuthenticationFunctions.Login(user);
+            Assert.IsNotNull(login);
+            Assert.IsTrue(login == user.Name);
         }
     }
 }

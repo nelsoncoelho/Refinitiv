@@ -19,7 +19,8 @@ namespace BPMSApi.Repositories
         public List<String> FilesToBeCopied { get; set; } = new List<String>
         {
             "Tasks",
-            "Users"
+            "Users",
+            "Approvals"
         };
 
         protected BaseRepository(BPMSApiInstance instance)
@@ -53,7 +54,7 @@ namespace BPMSApi.Repositories
                 using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 using (StreamReader reader = new StreamReader(stream))
                 {
-                    string result = reader.ReadToEnd();
+                    var result = reader.ReadToEnd();
                     File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + $"\\{f}.json", result);
                 }
             });
@@ -118,7 +119,7 @@ namespace BPMSApi.Repositories
         {
             // The below would be used to access the API and make PUT requests to it.
             // var response = await Client.PutAsync($"{BaseUrl}/{url}", GetByteArrayContent(content)).Result.Content.ReadAsStringAsync();
-            var response = GetJson("Tasks");
+            var response = GetJson(url);
             return JsonConvert.DeserializeObject<T>(response);
         }
 

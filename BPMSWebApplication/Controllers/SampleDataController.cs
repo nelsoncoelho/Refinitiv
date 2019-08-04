@@ -19,10 +19,10 @@ namespace BPMSWebApplication.Controllers
         }
 
         [HttpPut("[action]")]
-        public List<BPMSTaskData> UpdateBPMSTask([FromBody] UpdateBPMSTaskRequest request)
+        public List<UpdateBPMSTaskRequest> UpdateBPMSTask([FromBody] UpdateBPMSTaskRequest request)
         {
-            var results = BPMSApiInstance.BPMSTaskFunctions.UpdateBPMSTask(request).Result?.Data;
-            return results ?? new List<BPMSTaskData>(); ;
+            var results = BPMSApiInstance.BPMSTaskFunctions.UpdateBPMSTask(request).Result;
+            return results ?? new List<UpdateBPMSTaskRequest>(); ;
         }
 
         [HttpGet("[action]")]

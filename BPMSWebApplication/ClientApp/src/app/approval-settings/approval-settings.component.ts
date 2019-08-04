@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './approval-settings.component.html',
 })
 export class ApprovalSettingsComponent {
-  public forecasts: BPMSData[];
   public id: string;
   public request: ApprovalQuestions = {
     approved: true,
@@ -29,8 +28,7 @@ export class ApprovalSettingsComponent {
     else {
       this.request.id = this.id;
       this.request.approver = localStorage.getItem("User");
-      this.http.put<BPMSData[]>(this.baseUrl + 'api/SampleData/UpdateBPMSTask', this.request).subscribe(result => {
-        this.forecasts = result;
+      this.http.put<BPMSData[]>(this.baseUrl + 'api/SampleData/UpdateBPMSTask', this.request).subscribe(() => {
         window.alert("Approval settings completed.");
         this.router.navigateByUrl("fetch-data");
       }, error => console.error(error));
